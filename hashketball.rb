@@ -1,3 +1,5 @@
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,131 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(player_name)
+  points_scored = ""
+  game_hash.each do |location, team_info|
+    team_info.each do |attribute, data|
+      if attribute == :players
+        data.each do |data_item|
+          #binding.pry
+          if data_item[:player_name] == player_name
+            points_scored = data_item[:points]
+          end
+        end
+      end
+    end
+  end
+  points_scored
+end
+
+def shoe_size(player_name)
+  s_size = ""
+  game_hash.each do |location, team_info|
+    team_info.each do |attribute, data|
+      if attribute == :players
+        data.each do |data_item|
+          #binding.pry
+          if data_item[:player_name] == player_name
+            s_size = data_item[:shoe]
+          end
+        end
+      end
+    end
+  end
+  s_size
+end
+
+def team_colors(team_name)
+  t_colors = []
+  game_hash.each do |location, team_info|
+    team_info.each do |attribute, data|
+      if data == team_name
+        t_colors = team_info[:colors]
+      end
+      #binding.pry
+    end
+  end
+  t_colors
+end
+
+def team_names
+  t_names = []
+  game_hash.each do |location, team_info|
+    team_info.each do |attribute, data|
+      if attribute == :team_name
+        t_names << data
+        #binding.pry
+      end
+    end
+  end
+  t_names
+end
+
+def player_numbers(team_name)
+  p_numbers = []
+  game_hash.each do |location, team_info|
+    if team_info[:team_name] == team_name
+      team_info.each do |attribute, data|
+        if attribute == :players
+          data.each do |data_item|
+            #binding.pry
+            p_numbers << data_item[:number]
+          end
+        end
+      end
+    end
+  end
+  p_numbers
+end
+
+def player_stats(player_name)
+  p_stats = {}
+  game_hash.each do |location, team_info|
+
+    team_info.each do |attribute, data|
+      if attribute == :players
+        data.each do |data_item|
+          #binding.pry
+          if data_item[:player_name] == player_name
+            p_stats = data_item
+            #p_stats.delete(:player_name)
+          end
+        end
+      end
+    end
+  end
+  p_stats
+end
+
+def big_shoe_rebounds
+  num_rebounds = 0
+  shoe_sz = 0
+  game_hash.each do |location, team_info|
+    team_info.each do |attribute, data|
+      if attribute == :players
+        data.each do |data_item|
+          if data_item[:shoe] > shoe_sz
+            shoe_sz = data_item[:shoe]
+            num_rebounds = data_item[:rebounds]
+          end
+        end
+      end
+    end
+  end
+  num_rebounds
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
