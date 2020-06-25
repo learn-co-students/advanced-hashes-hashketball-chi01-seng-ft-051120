@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require "pry"
+
 def game_hash
   {
     home: {
@@ -127,3 +129,95 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(name)
+  
+  game_hash.each do |team_name, value|
+
+  value[:players].each do |player_hash|
+      if player_hash[:player_name] == name
+         return player_hash[:points]
+      end
+  end
+ end
+end
+
+
+def shoe_size(name) 
+  
+ game_hash.each do |team_name, value|
+   value[:players].each do |player_hash|
+     if player_hash[:player_name] == name
+       return player_hash[:shoe]
+     end 
+  end 
+ end
+end
+
+          
+def team_colors(name)
+  
+  game_hash.each do |place, team|
+    if team[:team_name] == name
+    return team[:colors]
+    end
+  end
+end
+
+def team_names 
+  pair_ofteams = []
+  
+  game_hash.each do |team_hash, place|
+  pair_ofteams << place[:team_name]
+  end
+  pair_ofteams
+end
+
+
+
+def player_numbers(team_name)
+  jerseys_num = []
+  
+  game_hash.collect do |team, stats|
+     if stats[:team_name] == team_name
+      stats[:players].collect do |player, data|
+        jerseys_num << (data[:number])
+     end
+    end
+  end
+  jerseys_num
+end
+
+def player_stats(player_name)
+playerdata = " "
+ game_hash.collect do |team, stats|
+  stats[:players].collect do |player, data|
+
+    if player == player_name
+      playerdata = data
+    end 
+  end 
+ end 
+playerdata
+end 
+
+def big_shoe_rebounds
+  playerrebound = nil 
+  numbs = []
+  biggest_shoesize = nil 
+      game_hash.collect do |team, stats|
+        stats[:players].collect do |player, data|
+          numbs.push(data[:shoe])
+          biggest_shoesize = numbs.sort[-1] 
+             data.collect do |category, stat|
+               if category == :shoe 
+                if stat == biggest_shoesize
+                  playerrebound =  data[:rebounds]
+                end 
+              end
+            end
+          end
+        end
+        playerrebound
+      end
+
+ 
