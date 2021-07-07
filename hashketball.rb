@@ -126,4 +126,68 @@ def game_hash
   }
 end
 
-# Write code here
+# METHODS BELOW!!!!
+
+def most_points_scored
+  players.sort_by {|player| player.fetch(:points)}.last
+end
+
+def num_points_scored(insert_player_name)
+  player = find_player(insert_player_name)
+  player.fetch(:points)
+end
+
+def shoe_size(insert_player_name)
+  player = find_player(insert_player_name)
+  player.fetch(:shoe)
+end
+
+def team_colors(insert_team_name)
+  team = find_team(insert_team_name)
+  team.fetch(:colors)
+end
+
+def team_names
+  teams.map do |team|
+    team[:team_name]
+  end
+end
+
+def player_numbers(insert_team_name)
+  find_team(insert_team_name)[:players].map do |player|
+    player[:number]
+  end
+end
+
+def player_stats(insert_player_name)
+  find_player(insert_player_name).reject { |key, value| key == nil }
+end
+
+def big_shoe_rebounds
+  player = max_shoe_size
+  player.fetch(:rebounds)
+end
+
+# DRY STUFF BELOW!!!!
+
+def players
+  home_players = game_hash.fetch(:home).fetch(:players)
+  away_players = game_hash.fetch(:away).fetch(:players)
+  home_players + away_players
+end
+
+def find_player(insert_player_name)
+  players.find {|player| player.fetch(:player_name) == insert_player_name}
+end
+
+def teams
+  game_hash.values
+end
+
+def find_team(insert_team_name)
+  teams.find {|team| team.fetch(:team_name) == insert_team_name}
+end
+
+def max_shoe_size
+  players.sort_by {|player| player.fetch(:shoe)}.last
+end
